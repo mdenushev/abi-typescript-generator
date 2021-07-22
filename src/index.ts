@@ -34,6 +34,10 @@ function cli(argv) {
 				console.error('Cannot read/parse input ABI file')
 				return;
 			}
+			if (!Array.isArray(abi)){
+				console.error('ABI should be array of methods (check example at ./test/erc20.json)');
+				return;
+			}
 			const code = generateTSCode(argv.contractName, abi);
 			fs.writeFileSync(argv.outputFile, code);
 		}
