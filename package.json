@@ -1,0 +1,22 @@
+{
+  "name": "abi-code-generator",
+  "version": "1.0.0",
+  "description": "Typescript ABI code generator",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "generate": "node ./build/index.js generate"
+  },
+  "author": "Max Denushev",
+  "license": "ISC",
+  "dependencies": {
+    "@types/node": "^16.3.0",
+    "@types/yargs": "^17.0.2",
+    "bignumber.js": "^9.0.1",
+    "typescript": "^4.3.4",
+    "yargs": "^17.0.1"
+  },
+  "devDependencies": {
+    "web3": "^1.4.0"
+  }
+}
