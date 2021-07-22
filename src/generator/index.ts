@@ -18,14 +18,14 @@ function prepareArgType(arg: ABIArgument): string {
 	if (arg.type === ABIArgumentType.Tuple) {
 		return '{\n' +
 			arg.components.map(field =>
-				addIdent(`${field.name}: ${ABITypesJS[field.type]}`, 2)
+				addIdent(`${field.name}: ${prepareArgType(field)}`, 2)
 			).join(',\n')
 			+ '\n}'
 	}
 	else if (arg.type === ABIArgumentType.Tuple+'[]'){
 		return '{\n' +
 			arg.components.map(field =>
-				addIdent(`${field.name}: ${ABITypesJS[field.type]}`, 2)
+				addIdent(`${field.name}: ${prepareArgType(field)}`, 2)
 			).join(',\n')
 			+ '\n}[]'
 	}
@@ -47,7 +47,14 @@ function prepareCallOutput(outputArgs: Array<ABIArgument>): string {
 		return 'void'
 	}
 	else {
-		return '[\n' + outputArgs.map(arg => addIdent(prepareArgType(arg), 2) + `,  // ${arg.name}`).join('\n') + '\n]'
+		return '{\n' +
+			addIdent(
+				outputArgs.map(arg => `${arg.name}: ${prepareArgType(arg)}`)
+									.join(',\n'),
+				2) +
+			'\n}';
+		// TODO: rm array variant later
+		// return '[\n' + outputArgs.map(arg => addIdent(prepareArgType(arg), 2) + `,  // ${arg.name}`).join('\n') + '\n]'
 	}
 }
 
