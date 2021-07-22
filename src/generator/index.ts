@@ -47,7 +47,7 @@ function prepareCallOutput(outputArgs: Array<ABIArgument>): string {
 		return 'void'
 	}
 	else {
-		return '[\n' + outputArgs.map(arg => addIdent(prepareArgType(arg), 2)).join(',\n') + '\n]'
+		return '[\n' + outputArgs.map(arg => addIdent(prepareArgType(arg), 2) + `,  // ${arg.name}`).join('\n') + '\n]'
 	}
 }
 
