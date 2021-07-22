@@ -11,7 +11,7 @@ const defaultConstructor =
 	'}'
 
 function prepareTSInputs(inputArgs: Array<ABIArgument>) : string {
-	return inputArgs.map(arg => `${arg.name !== '' ? arg.name : 'id'}: ${prepareArgType(arg)}`).join(', ')
+	return inputArgs.map((arg, i) => `${arg.name !== '' ? arg.name : 'id_'+(i+1)}: ${prepareArgType(arg)}`).join(', ')
 }
 
 function prepareArgType(arg: ABIArgument): string {
@@ -69,7 +69,7 @@ function generateContractFunction(abi: ABI) : string {
 	}
 	return `${abi.name}(${prepareTSInputs(abi.inputs)}, options?: ${optionsType}): ${outputType} {\n`+
 		     `  return this.contract.methods.${abi.name}(\n` +
-		     `    ${abi.inputs.map(arg => arg.name !== '' ? arg.name : 'id').join(',\n    ')}\n`+
+		     `    ${abi.inputs.map((arg, i) => arg.name !== '' ? arg.name : 'id_'+(i+1)).join(',\n    ')}\n`+
 		     `  ).${callFunction};\n`+
 				 `}\n`
 
