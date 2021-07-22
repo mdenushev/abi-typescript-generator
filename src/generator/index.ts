@@ -53,8 +53,6 @@ function prepareCallOutput(outputArgs: Array<ABIArgument>): string {
 									.join(',\n'),
 				2) +
 			'\n}';
-		// TODO: rm array variant later
-		// return '[\n' + outputArgs.map(arg => addIdent(prepareArgType(arg), 2) + `,  // ${arg.name}`).join('\n') + '\n]'
 	}
 }
 
