@@ -15,15 +15,20 @@ function prepareTSInputs(inputArgs: Array<ABIArgument>) : string {
 }
 
 function prepareArgType(arg: ABIArgument): string {
-	// Check if type is tuple
-	if (arg.name === '' && arg.type === ABIArgumentType.Tuple) {
+	if (arg.type === ABIArgumentType.Tuple) {
 		return '{\n' +
 			arg.components.map(field =>
 				addIdent(`${field.name}: ${ABITypesJS[field.type]}`, 2)
 			).join(',\n')
 			+ '\n}'
 	}
-	// TODO: check how it works with array of tuples
+	else if (arg.type === ABIArgumentType.Tuple+'[]'){
+		return '{\n' +
+			arg.components.map(field =>
+				addIdent(`${field.name}: ${ABITypesJS[field.type]}`, 2)
+			).join(',\n')
+			+ '\n}[]'
+	}
 	else if (arg.type.includes('[]')) {
 		const itemAbiType = arg.type.replace('[]', '')
 		return `(${ABITypesJS[itemAbiType]})[]`
