@@ -4,9 +4,8 @@ import {ABI, ABIStateMutability, ABIType} from "../types/abi";
 import {ABIArgument, ABIArgumentType, ABITypesJS} from "../types/abiArgument";
 
 const defaultConstructor =
-	'constructor(web3Instance: Web3, abi: any[], address: string){\n' +
+	'constructor(web3Instance: Web3, address: string){\n' +
 	'  this.web3 = web3Instance;\n' +
-	'  this.abi = abi;\n' +
 	'  this.contract = new this.web3.eth.Contract(this.abi, address)\n' +
 	'}'
 
@@ -87,8 +86,8 @@ export function generateTSCode(contractName: string, abi: ContractABI): string {
 	// Start class declaration
 	res += `class ${contractName}Contract {\n` +
 		'  web3: Web3;\n' +
-		'  abi: any[];\n' + // TODO: Add abi interface
-		'  contract: Contract;\n\n' +
+		`  abi: any[] = ${JSON.stringify(abi).replace(/[ \n]/g, '')};` +
+		'\n  contract: Contract;\n\n' +
 		addIdent(defaultConstructor, 2) + '\n\n';
 
 	// Add contract functions
